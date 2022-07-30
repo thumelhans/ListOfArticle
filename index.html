@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="app.js" defer></script>
+    <script src="https://kit.fontawesome.com/2247cba2a3.js" crossorigin="anonymous"></script>
+    <title>ListOfArticle</title>
+</head>
+
+<body>
+    <header>
+        <h1>Exercice Gestion d'une Liste d'Article</h1>
+    </header>
+    <main>
+        <section id="table-container">
+            <div class="table-header grid">
+                <div id="id" class="grid-area-id">
+                    <h3>
+                        ID
+                    </h3>
+                </div>
+                <div id="name" class="grid-area-name">
+                    <h3>
+                        Nom
+                    </h3>
+                </div>
+                <div id="quantity" class="grid-area-quantity">
+                    <h3>
+                        Quantité
+                    </h3>
+                </div>
+                <div id="price" class="grid-area-price">
+                    <h3>
+                        Prix
+                    </h3>
+                </div>
+                <div id="total" class="grid-area-total">
+                    <h3>
+                        Total
+                    </h3>
+                </div>
+            </div>
+            
+        </section>
+        <section id="form-container">
+            <form action="">
+                <div class="input-container">
+                    <label for="name">Nom</label>
+                    <input type="text" name="name">
+                </div>
+                <div class="input-container">
+                    <label for="quantity">Quantité</label>
+                    <input type="number" name="quantity">
+                </div>
+                <div class="input-container">
+                    <label for="price">Prix</label>
+                    <input type="number" name="price">
+                </div>
+                <div class="btn-container">
+                    <input type="submit" id="btn" value="Ajouter">
+                </div>
+            </form>
+        </section>
+    </main>
+    <footer>
+        <p>Tristan HUMELHANS - 2022</p>
+    </footer>
+</body>
+
+</html>
