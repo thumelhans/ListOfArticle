@@ -12,6 +12,13 @@ colonne quantité = quantity
 colonne prix = price
 colonne total = price * quantity
 
+Objets:
 
+    - Articles
+    - Table rows
+
+Fonctions:
+
+    - Création de la table row
 
 */
