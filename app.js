@@ -245,7 +245,6 @@ function isFormDataValid() {
   return isValid;
 }
 
-let isInArray;
 getFormSubmission.addEventListener("submit", (e) => {
   e.preventDefault();
   const regexBool = isFormDataValid();
@@ -258,31 +257,33 @@ getFormSubmission.addEventListener("submit", (e) => {
     const priceInputValue = getPriceNode.value;
 
     if (articlesArray.length > 0) {
-      console.log(articlesArray.at(-1));
-
-      articlesArray.every((element) => {
+      let isInArray = [];
+      for (let element of articlesArray) {
         if (element[0] === nameInputValue) {
-          console.log("L'élément est déjà dans le tableau");
-          return false;
-        } else {
-          articlesArray.push([
-            nameInputValue,
-            parseInt(quantityInputValue),
-            parseFloat(priceInputValue),
-          ]);
-          const lastArticle = articlesArray.at(-1);
-
-          const articleId = articlesArray.indexOf(articlesArray.at(-1));
-
-          let createTableRow = new NodeElements(
-            parseInt(articleId + 1),
-            lastArticle[0],
-            parseInt(lastArticle[1]),
-            parseInt(lastArticle[2])
-          );
-          createTableRow.appendRowContainer();
+          isInArray.push(true);
         }
-      });
+      }
+
+      if (isInArray.length > 0) {
+        console.log("L'élément est déjà dans le tableau");
+      } else {
+        articlesArray.push([
+          nameInputValue,
+          parseInt(quantityInputValue),
+          parseFloat(priceInputValue),
+        ]);
+        const lastArticle = articlesArray.at(-1);
+
+        const articleId = articlesArray.indexOf(articlesArray.at(-1));
+
+        let createTableRow = new NodeElements(
+          parseInt(articleId + 1),
+          lastArticle[0],
+          parseInt(lastArticle[1]),
+          parseInt(lastArticle[2])
+        );
+        createTableRow.appendRowContainer();
+      }
     } else {
       articlesArray.push([
         nameInputValue,
@@ -290,9 +291,9 @@ getFormSubmission.addEventListener("submit", (e) => {
         parseFloat(priceInputValue),
       ]);
       const lastArticle = articlesArray.at(-1);
-  
+
       const articleId = articlesArray.indexOf(articlesArray.at(-1));
-  
+
       let createTableRow = new NodeElements(
         parseInt(articleId + 1),
         lastArticle[0],
@@ -302,7 +303,7 @@ getFormSubmission.addEventListener("submit", (e) => {
       createTableRow.appendRowContainer();
       console.log("J'ajoute le premier élément");
     }
-    
+
     getNameNode.value = "";
     getQuantityNode.value = "";
     getPriceNode.value = "";
