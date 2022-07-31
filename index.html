@@ -20,27 +20,27 @@
             <div class="table-header grid">
                 <div class="mods-class grid-area-mods">
                 </div>
-                <div id="id" class="grid-area-id">
+                <div id="header-id" class="grid-area-id">
                     <h3>
                         ID
                     </h3>
                 </div>
-                <div id="name" class="grid-area-name">
+                <div id="header-name" class="grid-area-name">
                     <h3>
                         Nom
                     </h3>
                 </div>
-                <div id="quantity" class="grid-area-quantity">
+                <div id="header-quantity" class="grid-area-quantity">
                     <h3>
                         Quantité
                     </h3>
                 </div>
-                <div id="price" class="grid-area-price">
+                <div id="header-price" class="grid-area-price">
                     <h3>
                         Prix
                     </h3>
                 </div>
-                <div id="total" class="grid-area-total">
+                <div id="header-total" class="grid-area-total">
                     <h3>
                         Total
                     </h3>
@@ -49,18 +49,18 @@
             
         </section>
         <section id="form-container">
-            <form action="">
+            <form name="add-article" id="submissionform" action="index.html" method="get" novalidate>
                 <div class="input-container">
                     <label for="name">Nom</label>
-                    <input type="text" name="name">
+                    <input type="text" name="name" id="name">
                 </div>
                 <div class="input-container">
                     <label for="quantity">Quantité</label>
-                    <input type="number" name="quantity">
+                    <input type="number" name="quantity" id="quantity">
                 </div>
                 <div class="input-container">
                     <label for="price">Prix</label>
-                    <input type="number" name="price">
+                    <input type="number" name="price" id="price">
                 </div>
                 <div class="btn-container">
                     <input type="submit" id="btn" value="Ajouter">

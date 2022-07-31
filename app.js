@@ -56,6 +56,10 @@ Fonctions:
 // DOM Elements
 
 const getTableContainer = document.querySelector("#table-container");
+const getFormSubmission = document.getElementById("submissionform");
+const getNameNode = document.getElementById("name");
+const getQuantityNode = document.getElementById("quantity");
+const getPriceNode = document.getElementById("price");
 
 // Functions
 
@@ -76,30 +80,7 @@ function articles(name, quantity, price) {
   };
 }
 
-let article = articles("pantalon", 1, 25);
-
-articlesArray.push(article);
-
-article = articles("short", 2, 35);
-articlesArray.push(article);
-article = articles("chemise", 1, 55);
-articlesArray.push(article);
-article = articles("bob", 1, 10);
-articlesArray.push(article);
-article = articles("caleçon", 3, 12);
-articlesArray.push(article);
-article = articles("t-shirt", 2, 5.25);
-articlesArray.push(article);
-article = articles("pantalon", 4, 120);
-articlesArray.push(article);
-
-console.log(articlesArray[0].show);
-console.log(articlesArray[0].name);
-console.log(articlesArray[0].price);
-console.log(articlesArray[0].quantity);
-console.log(articlesArray[0].total());
-
-function nodeElementsFactory(tagname, id, name, quantity, price, total) {}
+// function nodeElementsFactory(tagname, id, name, quantity, price, total) {}
 class NodeElements {
   constructor(id, name, quantity, price) {
     this.id = id;
@@ -211,12 +192,84 @@ class NodeElements {
   // Méthode suppression
 }
 
-const test = new NodeElements(1, "Pantalon", 3, 20);
-const test2 = new NodeElements(2, "short", 4, 12);
-const test3 = new NodeElements(3, "Chemise", 1, 60);
-const test4 = new NodeElements(4, "Caleçon", 3, 29.99);
+const nameRegex = /^[a-zA-Z\u00e0-\u00ff]+(([- ])?[a-zA-Z\u00e0-\u00ff])+$/;
+const quantityRegex = /^\d+$/;
+const priceRegex = /^((\d+)(\.)(\d{2}))$|^\d+$/;
 
-test.appendRowContainer();
-test2.appendRowContainer();
-test3.appendRowContainer();
-test4.appendRowContainer();
+const inputValue = [
+  {
+    id: "name",
+    isValid: (value) => nameRegex.test(value),
+  },
+  {
+    id: "quantity",
+    isValid: (value) => quantityRegex.test(value),
+  },
+  {
+    id: "price",
+    isValid: (value) => priceRegex.test(value),
+  },
+];
+
+function regexTest() {
+  
+  const inputsValidity = {};
+
+  inputValue.forEach((input) => {
+    inputsValidity[input.id] = input.isValid(
+      document.getElementById(input.id).value
+    );
+  });
+
+  return inputsValidity;
+}
+
+console.log(regexTest());
+console.log(inputValue);
+
+function isFormDataValid() {
+  let regexTestArray = Object.entries(regexTest());
+  let isValid = true;
+  
+  for (const [key, value] of regexTestArray) {
+    if (!value) {
+      // document
+      //   .getElementById(key)
+      //   .parentNode.setAttribute("data-error-visible", "true");
+      console.log("not good " + key);
+      isValid = false;
+    }
+  }
+  
+  return isValid;
+}
+
+getFormSubmission.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const regexBool = isFormDataValid();
+  
+  if (!regexBool) {
+    console.log("Pas bon");
+  } else {
+    const nameInputValue = getNameNode.value;
+    const quantityInputValue = getQuantityNode.value;
+    const priceInputValue = getPriceNode.value;
+
+    articlesArray.push([nameInputValue, parseInt(quantityInputValue), parseFloat(priceInputValue)]);
+    
+    for(let i = 0; i < articlesArray.length; i++) {     
+      const isInArray =  articlesArray[i].includes(nameInputValue);
+      
+      if(isInArray){
+        let testingnode = new NodeElements(i+1, articlesArray[i][0], articlesArray[i][1], articlesArray[i][2])
+        testingnode.appendRowContainer(); 
+      }
+    }
+
+    getNameNode.value = '';
+    getQuantityNode.value = '';
+    getPriceNode.value = '';
+
+  }
+});
+
