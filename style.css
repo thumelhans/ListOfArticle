@@ -159,20 +159,16 @@ footer p::before {
   align-items: center;
 }
 
-.mods-class-article::before {
-  content: "\f303";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
+.fa-pencil {
   margin-right: 10px;
   color:orange;
+  cursor: pointer;
 }
 
-.mods-class-article::after {
-  content: "\f2ed";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 400;
+.fa-trash-can {
   margin-right: 10px;
   color: red;
+  cursor: pointer;
 }
 
 .grid-area-price, .grid-area-quantity, .grid-area-total{

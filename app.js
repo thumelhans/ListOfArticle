@@ -61,8 +61,6 @@ const getNameNode = document.getElementById("name");
 const getQuantityNode = document.getElementById("quantity");
 const getPriceNode = document.getElementById("price");
 
-// Functions
-
 // Objects
 const articlesArray = [];
 
@@ -79,8 +77,6 @@ function articles(name, quantity, price) {
     show: `Vous avez ajouter ${quantity} ${name}. Vous paierez: ${total()}€`,
   };
 }
-
-// function nodeElementsFactory(tagname, id, name, quantity, price, total) {}
 class NodeElements {
   constructor(id, name, quantity, price) {
     this.id = id;
@@ -118,10 +114,19 @@ class NodeElements {
   }
 
   modsClassNode() {
-    return this.createNodeElement("div", [
+    const nodeElement = this.createNodeElement("div", [
       "mods-class-article",
       "grid-area-mods",
     ]);
+    nodeElement.insertAdjacentHTML(
+      "afterbegin",
+      '<i class="fa-solid fa-pencil"></i>'
+    );
+    nodeElement.insertAdjacentHTML(
+      "beforeend",
+      '<i class="fa-regular fa-trash-can"></i>'
+    );
+    return nodeElement;
   }
 
   articleIdNode() {
@@ -212,7 +217,6 @@ const inputValue = [
 ];
 
 function regexTest() {
-  
   const inputsValidity = {};
 
   inputValue.forEach((input) => {
@@ -224,13 +228,10 @@ function regexTest() {
   return inputsValidity;
 }
 
-console.log(regexTest());
-console.log(inputValue);
-
 function isFormDataValid() {
   let regexTestArray = Object.entries(regexTest());
   let isValid = true;
-  
+
   for (const [key, value] of regexTestArray) {
     if (!value) {
       // document
@@ -240,14 +241,15 @@ function isFormDataValid() {
       isValid = false;
     }
   }
-  
+
   return isValid;
 }
 
+let isInArray;
 getFormSubmission.addEventListener("submit", (e) => {
   e.preventDefault();
   const regexBool = isFormDataValid();
-  
+
   if (!regexBool) {
     console.log("Pas bon");
   } else {
@@ -255,21 +257,78 @@ getFormSubmission.addEventListener("submit", (e) => {
     const quantityInputValue = getQuantityNode.value;
     const priceInputValue = getPriceNode.value;
 
-    articlesArray.push([nameInputValue, parseInt(quantityInputValue), parseFloat(priceInputValue)]);
-    
-    for(let i = 0; i < articlesArray.length; i++) {     
-      const isInArray =  articlesArray[i].includes(nameInputValue);
-      
-      if(isInArray){
-        let testingnode = new NodeElements(i+1, articlesArray[i][0], articlesArray[i][1], articlesArray[i][2])
-        testingnode.appendRowContainer(); 
-      }
+    if (articlesArray.length > 0) {
+      console.log(articlesArray.at(-1));
+
+      articlesArray.every((element) => {
+        if (element[0] === nameInputValue) {
+          console.log("L'élément est déjà dans le tableau");
+          return false;
+        } else {
+          articlesArray.push([
+            nameInputValue,
+            parseInt(quantityInputValue),
+            parseFloat(priceInputValue),
+          ]);
+          const lastArticle = articlesArray.at(-1);
+
+          const articleId = articlesArray.indexOf(articlesArray.at(-1));
+
+          let createTableRow = new NodeElements(
+            parseInt(articleId + 1),
+            lastArticle[0],
+            parseInt(lastArticle[1]),
+            parseInt(lastArticle[2])
+          );
+          createTableRow.appendRowContainer();
+        }
+      });
+    } else {
+      articlesArray.push([
+        nameInputValue,
+        parseInt(quantityInputValue),
+        parseFloat(priceInputValue),
+      ]);
+      const lastArticle = articlesArray.at(-1);
+  
+      const articleId = articlesArray.indexOf(articlesArray.at(-1));
+  
+      let createTableRow = new NodeElements(
+        parseInt(articleId + 1),
+        lastArticle[0],
+        parseInt(lastArticle[1]),
+        parseInt(lastArticle[2])
+      );
+      createTableRow.appendRowContainer();
+      console.log("J'ajoute le premier élément");
     }
-
-    getNameNode.value = '';
-    getQuantityNode.value = '';
-    getPriceNode.value = '';
-
+    
+    getNameNode.value = "";
+    getQuantityNode.value = "";
+    getPriceNode.value = "";
   }
 });
 
+// async function modifyArticle() {
+//   const getModificationElem = document.querySelector(".fa-pencil");
+//   const getDeleteElem = document.querySelector(".fa-trash-can");
+
+//   console.log(getDeleteElem);
+//   console.log(getModificationElem);
+
+//   getModificationElem.addEventListener("click", (e) => {
+//     e.preventDefault();
+//     e.stopPropagation();
+
+//     console.log("J'ai cliqué sur le pencil");
+//   });
+// }
+
+// modifyArticle();
+
+// getDeleteElem.addEventListener("click", (e) => {
+//   e.preventDefault();
+//   e.stopPropagation();
+
+//   console.log("J'ai cliqué sur la poubelle");
+// });
